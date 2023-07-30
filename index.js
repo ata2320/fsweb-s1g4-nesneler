@@ -1,6 +1,5 @@
 /*Bu görevleri yaparken çıktıların doğru çalıştığını kontrol etmeniz için console.log'u sıklıkla kullanmanızı tavsiye ediyoruz.*/
-const mazeret =
-  "bu kısımları haftasonu detaylı şekilde yeniden çalışmak için boş bırakıyorum.";
+
 ///////////////Menu Elemanları ///////////////////
 const cay = { isim: "Çay", fiyat: 4, kategori: "İçecekler" };
 const serpmeKahvalti = {
@@ -19,19 +18,13 @@ const serpmeKahvalti = {
 */
 
 function MenuElemaniOlustur(gelenİsim, gelenFiyat, gelenKategori) {
-  let menuElemanları2 = {};
-  menuElemanları2.isim = gelenİsim; //dot.notation
-  menuElemanları2["fiyat"] = gelenFiyat; //bracket notation
-  menuElemanları2.kategori = gelenKategori;
-  return menuElemanları2;
-
-  let menuElemanları = {
-    isim: gelenİsim,
-    fiyat: gelenFiyat,
-    kategori: gelenKategori,
-  };
-  return menuElemanları;
+  let menuElemanlari = {};
+  menuElemanlari.isim = gelenİsim;
+  menuElemanlari.fiyat = gelenFiyat;
+  menuElemanlari.kategori = gelenKategori;
+  return menuElemanlari;
 }
+
 //console.log(MenuElemaniOlustur("çay", 4, "içecekler"));
 //console.log(MenuElemaniOlustur("serpme kahvaltı", 16, "kahvaltı"));
 
@@ -60,13 +53,13 @@ const yeniElemean = MenuElemaniOlustur("serpme kahvaltı", 16, "kahvaltı");
 */
 
 const burger = {
-  isim: "Burger",
+  isim: "burger",
   fiyat: 18,
-  kategori: "Öğle Yemeği",
+  kategori: "yemek",
   indirim: function (meslek) {
     if (
-      meslek.toLowerCase() === "öğretmen" ||
-      meslek.toLowerCase() === "öğrenci"
+      meslek.toLowerCase() === "öğrenci" ||
+      meslek.toLowerCase() === "öğretmen"
     ) {
       return this.fiyat * 0.75;
     } else if (meslek.toLowerCase() === "diğer") {
@@ -74,7 +67,8 @@ const burger = {
     }
   },
 };
-console.log(burger.indirim("öğretmen"));
+
+//console.log(burger.indirim("öğretmen"));
 ///////////////Değerlendirmeler (MVP)///////////////////
 const degerlendirmeler = [
   {
@@ -124,20 +118,21 @@ const degerlendirmeler = [
 	Yukarıdaki degerlendirmeler dizisini(array) kullanarak:
 	1. Sadece Ahmet'in geribildirimini konsolda görüntüleyin - fonksiyona gerek yok
 */
-let yorum = degerlendirmeler.find((degerlendirme) => {
-  return degerlendirme.isim === "Ahmet";
+let yorum = degerlendirmeler.find(function (deger) {
+  return deger.isim === "Ahmet";
 });
-//console.log(yorum.geribildirim);
+
+console.log(yorum.geribildirim);
 
 /*  Görev 4 (ototest yok):  
 	Reyna'nın geribildirimi girilmemiş! Aşağıdakileri uygulayın: (fonksiyona gerek yok) 
 	1. Bu geribildirimi Reyna'nın değerlendirmesine ekleyin - "bu mekan bir harika dostum, yine de garsonun gülümsememesinden puan kırdım"
 	2. degerlendirmeler dizisini konsolda görüntüleyerek çalışmanızı kontrol edin
 */
-const reynaninYorumu = degerlendirmeler.find((degerlendirme) => {
-  return degerlendirme.isim == "Reyna";
+const reynaninGeriBildirimi = degerlendirmeler.find(function (dizi) {
+  return dizi.isim === "Reyna";
 });
-reynaninYorumu.geribildirim =
+degerlendirmeler.geribildirim =
   "bu mekan bir harika dostum, yine de garsonun gülümsememesinden puan kırdım";
 console.log(degerlendirmeler[7]);
 /*  Görev 5: 
@@ -151,10 +146,17 @@ console.log(degerlendirmeler[7]);
 	4. Güncellenmiş diziyi döndürecek
 */
 
-function DegerlendirmeEkle(dizi) {
-  /*Kodlar buraya */
+function DegerlendirmeEkle(dizi, isim, puan, geriBildirim) {
+  let yeniEleman = {
+    isim: isim,
+    puan: puan,
+    geribildirim: geriBildirim,
+  };
+  dizi.push(yeniEleman);
+  return dizi;
 }
-console.log(mazeret);
+const result = DegerlendirmeEkle(degerlendirmeler, "Mehmet", 1, "berbat");
+console.log(result);
 /*  Görev 6: 
 	Dizideki değerlendirmelerin anahtarına(key,index) bağlı olarak bir değerlendirme döndüren bir fonksiyon yazın
 	
@@ -165,11 +167,19 @@ console.log(mazeret);
 	Örnek: AnahtardanDegerlendirmeAl(degerlendirmeler,0) şunu döndürmeli: "Nalan isimli kişi 5 puan verdi ve şunları yazdı: Mükemmel atmosfer ve mükemmel vegan seçenekleri!"
 */
 
-function AnahtardanDegerlendirmeAl(/*Kodlar buraya*/) {
-  /*Kodlar buraya*/
-}
-console.log(mazeret);
+function AnahtardanDegerlendirmeAl(dizi, index) {
+  let yorum = dizi[index];
 
+  let metin =
+    yorum.isim +
+    " isimli kişi " +
+    yorum.puan +
+    " puan verdi" +
+    " ve şunları yazdı: " +
+    yorum.geribildirim;
+  return metin;
+}
+console.log(AnahtardanDegerlendirmeAl(degerlendirmeler, 0));
 /*  Görev 7:  
 	Diziden en son değerlendirmeyi döndüren adı `SonDegerlendirmeyiAl` olan bir fonksiyon yazın 
 	
@@ -182,10 +192,17 @@ console.log(mazeret);
 	Not: Eğer 4. görevi başarıyla yaptıysanız kişinin geribildirimi boş görünmemeli
 */
 
-function SonDegerlendirmeyiAl(/*Kodlar buraya*/) {
-  /*Kodlar buraya*/
+function SonDegerlendirmeyiAl(dizi) {
+  let yorum = dizi[dizi.lenght - 1];
+  let metin =
+    yorum.isim +
+    " isimli kişi " +
+    yorum.puan +
+    " puan verdi" +
+    " ve şunları yazdı:" +
+    yorum.geribildirim;
+  return metin;
 }
-console.log(mazeret);
 
 /////////////// BONUS  GÖRVLER////////////////////
 
